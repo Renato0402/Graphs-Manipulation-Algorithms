@@ -102,7 +102,15 @@ class GrafosMatriz:
             print(f"O grafo {num} não satisfaz o Teorema de Bondy e Chvatal.")
             return
 
-        aux = self.grafos[num][0:gLen:1]
+        aux = []
+
+        for i in range(0, len(self.grafos[num])):
+            temp = []
+
+            for j in range(0, len(self.grafos[num][i])):
+                temp.append(self.grafos[num][i][j])
+
+            aux.append(temp)
 
         tryClosules = True
         hasClosures = True
@@ -114,9 +122,9 @@ class GrafosMatriz:
 
                 cont = 0
 
-                for j in range(0, len(self.grafos[num][i])):
+                for j in range(0, len(aux[i])):
 
-                    if self.grafos[num][i][j] == 1:
+                    if aux[i][j] == 1:
                         cont += 1
 
                 graus.append(cont)
@@ -125,7 +133,7 @@ class GrafosMatriz:
 
             for i in range(0, gLen):
 
-                for j in range(0, len(self.grafos[num][i])):
+                for j in range(0, len(aux[i])):
 
                     if aux[i][j] == 0 and i != j:
 
@@ -138,7 +146,7 @@ class GrafosMatriz:
             hasClosures = False
 
             for i in range(0, gLen):
-                for j in range(0, len(self.grafos[num][i])):
+                for j in range(0, len(aux[i])):
                     if aux[i][j] == 0 and i != j:
                         hasClosures = True
 
@@ -162,8 +170,6 @@ class GrafosMatriz:
         x.add_edges_from(self.getTupla(aux))
         nx.draw_networkx(x)
         plt.show()
-
-        #print(self.grafos[num])
 
         print(f"O grafo {num} satisfaz o Teorema de Bondy e Chvatal!")
 
