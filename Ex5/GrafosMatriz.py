@@ -19,6 +19,8 @@ class GrafosMatriz:
         distancia = []
         anterior = []
 
+        arvore = []
+
         for i in range(0, len(self.estados)):
             color.append("white")
             distancia.append(math.inf)
@@ -40,9 +42,15 @@ class GrafosMatriz:
                 if self.grafo[u][j] == 1:
                     if color[j] == "white":
                         color[j] = "gray"
-                        distancia[j] = distancia[u] + 1
+                        distancia[j] = distancia[u] + distancia[j]
                         anterior[j] = u
                         queue.enqueue(self.estados[j])
 
+                        arvore.append([self.estados[u], self.estados[j]])
+
+                        print(distancia[j])
+
             color[u] = "black"
             print(queue.queue)
+
+        return arvore
