@@ -1,8 +1,8 @@
 import math
 from Queue import Queue
 
-class GrafosMatriz:
 
+class GrafosMatriz:
     grafo = [[0, 1, 0, 0, 1, 0, 0, 0],
              [1, 0, 0, 0, 0, 1, 0, 0],
              [0, 0, 0, 1, 0, 1, 1, 0],
@@ -43,7 +43,7 @@ class GrafosMatriz:
 
         queue = Queue()
         queue.enqueue(self.estados[s])
-        #print(queue.queue)
+        print(queue.queue)
 
         while queue.size() != 0:
             u = queue.dequeue()
@@ -62,34 +62,14 @@ class GrafosMatriz:
             self.color[u] = "black"
             # print(queue.queue)
 
-        #print(self.distancia)
+        print(self.distancia)
         return self.arvore
 
-    '''def dist(self, a, b):
+    def dist(self, a, b):
 
         self.BFS(a)
 
-        if b == a:
-            print(a)
-
-        else:
-
-            if self.anterior[b] == None:
-
-                print("Caminho não existe.")
-
-
-            else:
-
-                self.dist(a,self.anterior[b])
-
-                print(b)'''
-
-    def dist2(self, a, b):
-
-        self.BFS(a)
-
-        print(f"Distancia de {a} para {b}: ", self.distancia[b])
+        print(f"\nDistancia de {a} para {b}: ", self.distancia[b] , "\n")
 
     def maxDist(self):
 
@@ -104,20 +84,25 @@ class GrafosMatriz:
                 if self.distancia[j] >= maior:
                     maior = self.distancia[j]
 
-            # maior = max(self.distancia)
+        print(f"\nDiametro do grafo: {maior}\n")
 
-        print(f"Diametro do grafo: {maior}")
+    def media(self):
 
-
-    def media(self, s):
+        contador = 0
 
         soma = 0
 
-        self.BFS(s)
+        for i in range(0, len(self.estados)):
 
-        for i in range(0, len(self.distancia)):
-            soma += self.distancia[i]
+            self.BFS(i)
 
-        media = soma / len(self.distancia) # - 1
+            for j in range(i, len(self.estados)):
 
-        print(f"Distancia Media : {media}")
+                if i != j:
+                    soma += self.distancia[j]
+
+                    contador += 1
+
+        media = soma / contador
+
+        print(f"\nDistancia Média do grafo: {round(media, 2)}")
