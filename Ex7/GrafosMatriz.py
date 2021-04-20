@@ -1,5 +1,7 @@
+from Stack import Stack
 
 class GrafosMatriz:
+
     grafo = [[0, 0, 1, 1, 0, 0, 0, 0],
              [0, 0, 1, 1, 0, 0, 0, 0],
              [1, 1, 0, 1, 0, 0, 0, 1],
@@ -12,7 +14,10 @@ class GrafosMatriz:
     estados = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
     vertices = []
+
     arvore = []
+
+    pilha = Stack()
 
     def __init__(self):
         for i in range(0, len(self.estados)):
@@ -30,7 +35,27 @@ class GrafosMatriz:
 
         return self.arvore
 
+    def DFS2(self, u):
+
+        self.pilha.add(u)
+
+        while self.pilha.size() > 0:
+
+            self.pilha.remove()
+
+            if not self.vertices[u]:
+
+                self.vertices[u] = True
+
+                for i in range(0, len(self.grafo[u])):
+                    if self.grafo[u][i] == 1:
+                        self.pilha.add(i)
+                        self.arvore.append([self.estados[u], self.estados[i]])
+
+        return self.arvore
+
     def getTupla(self):
+
         x = []
 
         for i in range(0, len(self.grafo)):
