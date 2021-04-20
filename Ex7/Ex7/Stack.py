@@ -1,0 +1,15 @@
+class Stack:
+
+    def __init__(self):
+        self.stack = []
+
+    def add(self, item):
+        self.stack.append(item)
+
+    def remove(self):
+        if len(self.stack) < 1:
+            return None
+        return self.stack.pop(len(self.stack) - 1)
+
+    def size(self):
+        return len(self.stack)
