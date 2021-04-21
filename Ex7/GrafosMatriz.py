@@ -35,7 +35,7 @@ class GrafosMatriz:
 
         return self.arvore
 
-    def DFS2(self, u):
+    '''def DFS2(self, u):
 
         self.pilha.add(u)
 
@@ -52,7 +52,7 @@ class GrafosMatriz:
                         self.pilha.add(i)
                         self.arvore.append([self.estados[u], self.estados[i]])
 
-        return self.arvore
+        return self.arvore'''
 
     def getTupla(self):
 
