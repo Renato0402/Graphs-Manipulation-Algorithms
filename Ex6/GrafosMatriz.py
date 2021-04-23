@@ -96,12 +96,12 @@ class GrafosMatriz:
 
             self.BFS(i)
 
-            for j in range(i, len(self.estados)):
+            for j in range(i+1, len(self.estados)):
 
-                if i != j:
-                    soma += self.distancia[j]
 
-                    contador += 1
+              soma += self.distancia[j]
+
+              contador += 1
 
         media = soma / contador
 
