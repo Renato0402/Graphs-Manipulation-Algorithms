@@ -1,5 +1,5 @@
-
 from Stack import Stack
+
 
 class GrafosMatriz:
     grafo = [[0, 0, 1, 1, 0, 0, 0, 0],
@@ -33,7 +33,7 @@ class GrafosMatriz:
 
     componente = []
 
-    conexoes = []
+    componentes = []
 
     color = []
 
@@ -51,65 +51,65 @@ class GrafosMatriz:
             self.color.append("white")
 
         self.color[u] = 'gray'
-        global verdade
-        verdade = True
+        global noWay
+        noWay = True
 
         while self.pilha.size() > 0:
             u = self.pilha.get()
 
             for i in range(0, len(self.grafo[u])):
-                verdade = True
+                noWay = True
                 if self.grafo[u][i] == 1:
 
                     if self.color[i] == 'white':
                         self.color[i] = 'gray'
                         self.pilha.add(i)
                         self.arvore.append([self.estados[u], self.estados[i]])
-                        verdade = False
+                        noWay = False
                         break
 
-            if verdade:
+            if noWay:
                 self.color[u] = 'black'
                 self.pilha.remove()
 
         return self.arvore
 
-    def DFS(self, u):
+    def recursiveDFS(self, u):
         self.vertices[u] = True
         self.componente.append(u)
 
         for i in range(0, len(self.grafo2[u])):
             if self.grafo2[u][i] == 1:
                 if not self.vertices[i]:
-                    self.DFS(i)
+                    self.recursiveDFS(i)
         return self.arvore
 
     def getComponents(self):
         for i in range(0, len(self.estados2)):
             if not self.vertices[i]:
                 self.componente.clear()
-                self.DFS(i)
+                self.recursiveDFS(i)
 
                 aux = []
 
                 for j in range(0, len(self.componente)):
                     aux.append(self.estados2[self.componente[j]])
 
-                self.conexoes.append(aux)
+                self.componentes.append(aux)
 
     def checkConexos(self):
         self.getComponents()
 
-        print("Quantidades de componentes conexos: ", len(self.conexoes))
+        print("Quantidades de componentes conexos: ", len(self.componentes))
 
-        for i in range(0, len(self.conexoes)):
-            print(f"Quantidade de vertice do componente {i + 1}: {len(self.conexoes[i])}")
+        for i in range(0, len(self.componentes)):
+            print(f"Quantidade de vertice do componente {i + 1}: {len(self.componentes[i])}")
 
-        for i in range(0, len(self.conexoes)):
+        for i in range(0, len(self.componentes)):
             print(f"Vertices do componente {i + 1}: ")
 
-            for j in range(0, len(self.conexoes[i])):
-                print(f"{self.conexoes[i][j]}", end=" ")
+            for j in range(0, len(self.componentes[i])):
+                print(f"{self.componentes[i][j]}", end=" ")
 
             print()
 
