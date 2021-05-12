@@ -75,6 +75,9 @@ class GrafosMatriz:
 
         custo[u]=0
         print(custo)
+        
+        
+        
     def getTupla(self):
         x = []
 
