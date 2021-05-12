@@ -12,7 +12,7 @@ class GrafosMatriz:
     grafo2 = [[0, 5, 7, 1, 0, 0, 0],
               [0, 0, 2, 0, 0, 0, 0],
               [0, 0, 0, 6, 5, 0, 0],
-              [0, 0, 0, 0, 0, 5, 3],
+              [0, 3, 0, 0, 0, 5, 3],
               [0, 0, 0, 0, 0, 4, 0],
               [0, 0, 1, 0, 0, 0, 0],
               [0, 0, 0, 0, 1, 0, 0]]
@@ -53,17 +53,29 @@ class GrafosMatriz:
         for i in range(0, len(self.grafo[u])):
 
             if self.grafo[u][i] != 0:
-                custo[i] = self.grafo[u][i]
+                custo.insert(i,self.grafo[u][i])
 
             else:
-                custo[i] = math.inf
+                custo.insert(i,math.inf)
+
 
         while len(N) != len(self.grafo[u]):
-            # CONTINUAR
 
-            pass
+         for i in range(0,len(N)):
+             if len(N) == len(self.grafo[u]):
+                    break
+             for w in range(0,len(self.grafo[u])):
+                 if N[i]!= w and (custo[w] == min(custo)):
+                   N.append(w)
+                   print(len(N))
 
 
+                 for v in range(0,len(self.grafo[w])):
+                   if self.grafo[w][v]!= 0:                 
+                      custo[v] = min(custo[v],custo[w] + self.grafo[w][v])
+
+        custo[u]=0
+        print(custo)
     def getTupla(self):
         x = []
 
