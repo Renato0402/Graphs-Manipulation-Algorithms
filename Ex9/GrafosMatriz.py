@@ -66,8 +66,7 @@ class GrafosMatriz:
                     break
              for w in range(0,len(self.grafo[u])):
                  if N[i]!= w and (custo[w] == min(custo)):
-                   N.append(w)
-                   print(len(N))
+                   N.append(w)                
 
 
                  for v in range(0,len(self.grafo[w])):
