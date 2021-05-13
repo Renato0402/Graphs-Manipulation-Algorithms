@@ -36,48 +36,105 @@ class GrafosMatriz:
     estados2 = ["a", "b", "c", "d", "e", "f", "g"]
     estados3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"]
 
-    vertices = []
+    values = []
 
-    arvore = []
-
-    def __init__(self):
-        for i in range(0, len(self.estados2)):
-            self.vertices.append(False)
-
-    def dijkstra(self, u):
+    def dijkstra(self,grafo,estados, u):
 
         custo = []
 
         N = [u]
 
-        for i in range(0, len(self.grafo[u])):
 
-            if self.grafo[u][i] != 0:
-                custo.insert(i,self.grafo[u][i])
+        for i in range(0, len(estados)):
+            self.values.append(i)
+
+
+        caminho = []
+
+        for i in range(0,len(estados)):
+            caminho.append(0)
+
+
+        self.values.remove(u)
+
+        for i in range(0, len(grafo[u])):
+
+            if grafo[u][i] != 0:
+                custo.insert(i, grafo[u][i])
 
             else:
-                custo.insert(i,math.inf)
+                custo.insert(i, math.inf)
 
+        while len(N) != len(grafo[u]):
 
-        while len(N) != len(self.grafo[u]):
+            for w in self.values:
 
-         for i in range(0,len(N)):
-             if len(N) == len(self.grafo[u]):
-                    break
-             for w in range(0,len(self.grafo[u])):
-                 if N[i]!= w and (custo[w] == min(custo)):
-                   N.append(w)                
+                if w not in N and custo[w] == self.minimo(custo, N):
+                    N.append(w)
+                    self.values.remove(w)
 
+                for v in range(0, len(grafo[w])):
 
-                 for v in range(0,len(self.grafo[w])):
-                   if self.grafo[w][v]!= 0:                 
-                      custo[v] = min(custo[v],custo[w] + self.grafo[w][v])
+                    if grafo[w][v] != 0 and v not in N:
+                        if custo[v] > custo[w] + grafo[w][v]:
+                         custo[v] =  custo[w] + grafo[w][v]
+                         caminho[v] = w
 
         custo[u]=0
-        print(custo)
-        
-        
-        
+        self.printCaminho(u,custo,caminho,estados)
+
+    def printDijsktraRecursive(self, caminho, proximo, estados):
+
+        if caminho[proximo] == 0:
+            print(estados[proximo], end=' ')
+
+            return
+        self.printDijsktraRecursive(caminho,caminho[proximo],estados)
+        print("->",estados[proximo], end=' ')
+
+
+    def printDijsktraNonRecursive(self, caminho, proximo, estados):
+
+        global prox
+        prox = proximo
+        vAux = []
+
+        while True:
+             aux = caminho[prox]
+             if aux != 0:
+                 vAux.append(estados[prox])
+                 prox = caminho[prox]
+
+             if aux == 0:
+                 vAux.append(estados[prox])
+                 break
+
+        for i in range(len(vAux)-1,-1,-1):
+            if i != 0:
+             print(vAux[i],'->',end=' ')
+            else:
+             print(vAux[i], end=' ')
+
+
+
+    def printCaminho(self, src, custo, caminho,estados):
+        print("Vertices\t\tCusto\t\tCaminho Feito")
+        print("")
+
+        for i in range(0, len(custo)):
+
+            print(estados[src], "->",estados[i],"\t\t\t", custo[i],end='')
+
+            if custo[i] != math.inf:
+             print("\t\t\t",estados[src],"-> ",end='')
+            else:
+             print("\t\t", estados[src], "-> ", end='')
+
+            self.printDijsktraNonRecursive(caminho,i,estados)
+            print('\n')
+
+
+
     def getTupla(self):
         x = []
 
@@ -91,3 +148,14 @@ class GrafosMatriz:
                 x[i][j] = self.estados[x[i][j]]
 
         return x
+
+    def minimo(self, custo, N):
+
+        res = []
+
+        for i in range(0, len(custo)):
+
+            if i not in N:
+                res.append(custo[i])
+
+        return min(res)
