@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 from GrafosMatriz import GrafosMatriz
 
 if __name__ == '__main__':
-    x = nx.Graph()
+    #x = nx.Graph()
 
-    grafo = GrafosMatriz()
+    grafos = GrafosMatriz()
 
-    x.add_edges_from(grafo.getTupla())
+    '''x.add_edges_from(grafos.getTupla())
     nx.draw_networkx(x)
-    plt.show()
+    plt.show()'''
 
-    grafo.dijkstra(0)
+    grafos.dijkstra(grafos.grafo,grafos.estados,0)
