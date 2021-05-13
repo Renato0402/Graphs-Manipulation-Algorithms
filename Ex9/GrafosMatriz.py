@@ -36,9 +36,11 @@ class GrafosMatriz:
     estados2 = ["a", "b", "c", "d", "e", "f", "g"]
     estados3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"]
 
-    values = []
+
 
     def dijkstra(self,grafo,estados, u):
+
+        values = []
 
         custo = []
 
@@ -46,7 +48,7 @@ class GrafosMatriz:
 
 
         for i in range(0, len(estados)):
-            self.values.append(i)
+           values.append(i)
 
 
         caminho = []
@@ -55,7 +57,7 @@ class GrafosMatriz:
             caminho.append(0)
 
 
-        self.values.remove(u)
+        values.remove(u)
 
         for i in range(0, len(grafo[u])):
 
@@ -67,11 +69,11 @@ class GrafosMatriz:
 
         while len(N) != len(grafo[u]):
 
-            for w in self.values:
+            for w in values:
 
                 if w not in N and custo[w] == self.minimo(custo, N):
                     N.append(w)
-                    self.values.remove(w)
+                    values.remove(w)
 
                 for v in range(0, len(grafo[w])):
 
@@ -159,3 +161,4 @@ class GrafosMatriz:
                 res.append(custo[i])
 
         return min(res)
+
