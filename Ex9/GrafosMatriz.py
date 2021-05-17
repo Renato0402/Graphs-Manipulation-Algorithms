@@ -85,15 +85,6 @@ class GrafosMatriz:
         custo[u]=0
         self.printCaminho(u,custo,caminho,estados)
 
-    def printDijsktraRecursive(self, caminho, proximo, estados):
-
-        if caminho[proximo] == 0:
-            print(estados[proximo], end=' ')
-
-            return
-        self.printDijsktraRecursive(caminho,caminho[proximo],estados)
-        print("->",estados[proximo], end=' ')
-
 
     def printDijsktraNonRecursive(self, caminho, proximo, estados):
 
