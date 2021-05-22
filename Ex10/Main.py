@@ -12,4 +12,4 @@ if __name__ == '__main__':
     nx.draw_networkx(x)
     plt.show()'''
 
-    grafos.bellman(grafos.grafo2, 0)
+    grafos.bellman(grafos.grafo, 0,grafos.estados)
