@@ -35,7 +35,7 @@ class GrafosMatriz:
               [0, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0],
               [0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0],
-              [0, 0, -3, 0, 0, 0, 8, 0, 0, 0],
+              [0, 0, 0, -3, 0, 0, 0, 8, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, -6, 0, 7, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -43,10 +43,15 @@ class GrafosMatriz:
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
               [0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0]]
 
+    grafo5 = [[0,3,0],
+              [-5,0,3],
+              [0,0,0]]
+
     estados  = ["s","t","x","y","z"]
     estados2 = ["a", "b", "c", "d", "e", "f", "g"]
     estados3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"]
     estados4 = ["s","a","b","c","d","e","f","g","h","i","j"]
+    estados5 = ["u","v","w"]
 
     d = []
     p = []
@@ -67,18 +72,21 @@ class GrafosMatriz:
     def bellman(self, grafo, s,estados):
         self.initializeSS(grafo, s)
 
-        for i in range(0,len(grafo)):
-           for j in range(0, len(grafo[i])):
+        for _ in range(1, len(grafo) - 1):
+            for i in range(0, len(grafo)):
+                for j in range(0, len(grafo[i])):
+                    if grafo[i][j] != 0:
+                        self.relax(i, j, grafo)
+
+        for i in range(0, len(grafo)):
+            for j in range(0, len(grafo[i])):
                 if grafo[i][j] != 0:
-                    self.relax(i, j, grafo)
+                    if self.d[j] > self.d[i] + grafo[i][j]:
+                        self.printCaminho(s, self.d, self.p, estados)
+                        print("Grafo contem ciclo com peso negativo")
+                        return False
 
-        for j in range(0, len(grafo)):
-            if grafo[s][j] != 0:
-              if self.d[s] > self.d[j] + grafo[j][s]:
-                 print("Grafo contem ciclo com peso negativo")
-                 return False
-
-        print(self.p)
+        print(self.p,"V")
         self.printCaminho(s,self.d,self.p,estados)
         return True
 
@@ -100,7 +108,12 @@ class GrafosMatriz:
 
         for i in range(len(vAux)-1,-1,-1):
             if i != 0:
-             print(vAux[i],'->',end=' ')
+                
+             if vAux[i]!= math.inf and vAux[i] != 0:
+              print("\t\t\t",vAux[i],'->',end=' ')
+             else:
+              print(vAux[i], '->', end=' ')
+
             else:
              print(vAux[i], end=' ')
 
@@ -112,10 +125,11 @@ class GrafosMatriz:
 
             print(estados[src], "->",estados[i],"\t\t\t", custo[i],end='')
 
-            if custo[i] != math.inf:
-             print("\t\t\t",estados[src],"-> ",end='')
-            else:
-             print("\t\t", estados[src], "-> ", end='')
+            if custo[i] == math.inf or custo[i] == 0:
+             if custo[i] != math.inf:
+              print("\t\t\t",estados[src],"-> ",end='')
+             else:
+              print("\t\t", estados[src], "-> ", end='')
 
             self.printBellman(caminho,i,estados)
             print('\n')
