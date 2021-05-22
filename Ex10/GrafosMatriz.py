@@ -72,7 +72,7 @@ class GrafosMatriz:
     def bellman(self, grafo, s,estados):
         self.initializeSS(grafo, s)
 
-        for _ in range(1, len(grafo) - 1):
+        for _ in range(0, len(grafo) - 1):
             for i in range(0, len(grafo)):
                 for j in range(0, len(grafo[i])):
                     if grafo[i][j] != 0:
@@ -82,7 +82,6 @@ class GrafosMatriz:
             for j in range(0, len(grafo[i])):
                 if grafo[i][j] != 0:
                     if self.d[j] > self.d[i] + grafo[i][j]:
-                        self.printCaminho(s, self.d, self.p, estados)
                         print("Grafo contem ciclo com peso negativo")
                         return False
 
@@ -108,12 +107,7 @@ class GrafosMatriz:
 
         for i in range(len(vAux)-1,-1,-1):
             if i != 0:
-                
-             if vAux[i]!= math.inf and vAux[i] != 0:
-              print("\t\t\t",vAux[i],'->',end=' ')
-             else:
-              print(vAux[i], '->', end=' ')
-
+             print(vAux[i],'->',end=' ')
             else:
              print(vAux[i], end=' ')
 
@@ -125,11 +119,11 @@ class GrafosMatriz:
 
             print(estados[src], "->",estados[i],"\t\t\t", custo[i],end='')
 
-            if custo[i] == math.inf or custo[i] == 0:
-             if custo[i] != math.inf:
-              print("\t\t\t",estados[src],"-> ",end='')
-             else:
-              print("\t\t", estados[src], "-> ", end='')
+
+            if custo[i] != math.inf:
+             print("\t\t\t",estados[src],"-> ",end='')
+            else:
+             print("\t\t", estados[src], "-> ", end='')
 
             self.printBellman(caminho,i,estados)
             print('\n')
