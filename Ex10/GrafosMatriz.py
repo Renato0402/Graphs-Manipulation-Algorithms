@@ -142,9 +142,11 @@ class GrafosMatriz:
 
         for i in range(len(vAux) - 1, -1, -1):
             if i != 0:
-                print(vAux[i], '->', end=' ')
+              if vAux[i]!=estados[src]:
+               print(vAux[i],'->',end=' ')
+
             else:
-                print(vAux[i], end=' ')
+             print(vAux[i], end=' ')
 
     def printCaminho(self, src, custo, caminho, estados):
         print("Vertices\t\tCusto\t\tCaminho Feito")
