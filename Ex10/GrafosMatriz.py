@@ -119,7 +119,6 @@ class GrafosMatriz:
                         print("Grafo contem ciclo com peso negativo")
                         return False
 
-        print(self.d, "V")
 
         self.printCaminho(s, self.d, self.p, estados)
         return True
