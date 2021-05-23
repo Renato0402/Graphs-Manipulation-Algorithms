@@ -124,7 +124,7 @@ class GrafosMatriz:
         self.printCaminho(s, self.d, self.p, estados)
         return True
 
-    def printBellman(self, caminho, proximo, estados):
+    def printBellman(self,src, caminho, proximo, estados):
 
         global prox
         prox = proximo
@@ -161,5 +161,5 @@ class GrafosMatriz:
             else:
                 print("\t\t", estados[src], "-> ", end='')
 
-            self.printBellman(caminho, i, estados)
+            self.printBellman(src,caminho, i, estados)
             print('\n')
