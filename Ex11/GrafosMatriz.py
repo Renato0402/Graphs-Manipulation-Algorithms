@@ -63,7 +63,7 @@ class GrafosMatriz:
 
 
         for k in range(0, len(grafo)):
-            print('d',k,end=' ')
+            print('d',k+1,end=' ')
             for i in range(0, len(grafo)):
                 for j in range(0, len(grafo)):
                     if c[i][j] > c[i][k] + c[k][j]:
@@ -72,7 +72,7 @@ class GrafosMatriz:
 
             self.printD(c)
             print('\n')
-            print('p', k, end='')
+            print('p', k+1, end='')
             self.printP(p,estados)
             print('\n')
 
