@@ -45,11 +45,10 @@ class GrafosMatriz:
             aux1 = []
 
             for j in range(0, len(grafo)):
-                # aux1.insert(j, None)
 
                 if grafo[i][j] != 0:
                     aux.insert(j, grafo[i][j])
-                    aux1.insert(j, int(estados[i]))
+                    aux1.insert(j, i)
                 if grafo[i][j] == 0 and i != j:
                     aux.insert(j, math.inf)
                     aux1.insert(j, None)
@@ -60,20 +59,98 @@ class GrafosMatriz:
             c.insert(i, aux)
             p.insert(i, aux1)
 
-        # print(c)
-        print(p)
+
+
 
         for k in range(0, len(grafo)):
+            print('d',k,end=' ')
             for i in range(0, len(grafo)):
                 for j in range(0, len(grafo)):
                     if c[i][j] > c[i][k] + c[k][j]:
                         c[i][j] = c[i][k] + c[k][j]
+                        p[i][j] = p[k][j]
 
-                        if p[k][j] is not None:
-                            p[i][j] = p[k][j]
-                        #if p[k][j] is None:
-                            #p[i][j] = int(estados[p[k][j]])
+            self.printD(c)
+            print('\n')
+            print('p', k, end='')
+            self.printP(p,estados)
+            print('\n')
 
-                    # c[i][j] = min(c[i][j], c[i][k]+c[k][j])
-            # print(c)
-            print(p)
+
+        self.printCaminho(c,p,estados)
+
+    def printD(self,m):
+        for i in range(0,len(m)):
+            for j in range(0, len(m[i])):
+                if i!=0 and j==0:
+                  print("\t\t",m[i][j],' ',end='')
+                else:
+                  print("\t", m[i][j], ' ', end='')
+
+            print('')
+
+    def printP(self,m,estados):
+        for i in range(0,len(m)):
+            for j in range(0, len(m[i])):
+              if i==0 and j==0 and m[i][j]is None:
+               print("\t\t", m[i][j], ' ', end='')
+              else:
+                if i!=0 and j==0:
+                  if m[i][j] is None:
+                   print("\t\t",m[i][j],' ',end='')
+                  else:
+                   print("\t\t", estados[m[i][j]], ' ', end='')
+                else:
+                   if m[i][j] is None:
+                    print("\t", m[i][j], ' ', end='')
+                   else:
+                    print("\t", estados[m[i][j]], ' ', end='')
+
+            print('')
+
+
+
+
+    def printFloyd(self, caminho,current, proximo, estados):
+
+        global prox
+        prox = proximo
+        vAux = []
+
+        while True:
+          aux = caminho[current][prox]
+
+          if aux is None:
+             vAux.append(estados[prox])
+             break
+
+          if aux != None:
+             vAux.append(estados[prox])
+             prox = caminho[current][prox]
+
+
+        for i in range(len(vAux) - 1, -1, -1):
+            if i != 0:
+              if vAux[i]!=estados[current]:
+               print(vAux[i],'->',end=' ')
+
+            else:
+             print(vAux[i], end=' ')
+
+
+    def printCaminho(self,  custo, caminho, estados):
+        print("Vertices\t\tCusto\t\tCaminho Feito")
+        print("")
+
+        for i in range(0, len(custo)):
+          for j in range(0,len(custo[i])):
+
+            print(estados[i], "->", estados[j], "\t\t\t", custo[i][j], end='')
+
+            if custo[i][j] != math.inf:
+                print("\t\t\t", estados[i], "-> ", end='')
+            else:
+                print("\t\t", estados[i], "-> ", end='')
+
+            self.printFloyd(caminho,i, j, estados)
+            print('\n')
