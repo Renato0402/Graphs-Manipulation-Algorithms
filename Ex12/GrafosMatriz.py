@@ -11,6 +11,7 @@ class GrafosMatriz:
     estados = ["A", "B", "C", "D", "E", "F"]
     d = []
     p = []
+    
     minimo = 0
     v = []
     hasCaminho = True
@@ -72,35 +73,35 @@ class GrafosMatriz:
 
         global prox
         prox = proximo
-        vAux = []
+        vertices = []
 
-        global aux
-        aux = src
-        vAux2 = []
+        global current
+        current = src
+        arestas = []
 
         while True:
             aux = caminho[prox]
             if aux != 0:
-                vAux.append(prox)
+                vertices.append(prox)
                 prox = caminho[prox]
 
             if aux == 0:
-                vAux.append(prox)
+                vertices.append(prox)
                 break
 
-        for i in range(len(vAux) - 1, -1, -1):
+        for i in range(len(vertices) - 1, -1, -1):
 
-           vAux2.append(grafo[aux][vAux[i]])
+           arestas.append(grafo[current][vertices[i]])
 
-           if grafo[aux][vAux[i]]!= 0:
+           if grafo[current][vertices[i]]!= 0:
                self.hasCaminho = True
            else:
                self.hasCaminho = False
 
-           aux = vAux[i]
+           current = vertices[i]
 
 
-        self.minimo = min(vAux2)
+        self.minimo = min(arestas)
 
-        self.v = vAux
+        self.v = vertices
 
