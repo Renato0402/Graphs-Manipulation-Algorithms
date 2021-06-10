@@ -47,11 +47,6 @@ class GrafosMatriz:
 
             caminho.append(caminhoAtual.copy())
 
-            '''for i in range(len(caminhoAtual) - 1, -1, -1):
-                print(self.estados[caminhoAtual[i]], "->", end=' ')
-
-            print(self.estados[t])'''
-
             aux = []
 
             for i in range(0, len(g)):
