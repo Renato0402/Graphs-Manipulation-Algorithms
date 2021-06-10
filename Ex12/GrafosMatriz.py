@@ -18,6 +18,8 @@ class GrafosMatriz:
         anterior = []
         residuais = []
         fluxos = []
+        caminho = []
+        minimos = []
 
         for i in range(0, len(g)):
             anterior.insert(i, 0)
@@ -30,25 +32,45 @@ class GrafosMatriz:
                 c = min(c, g[anterior[aux]][aux])
                 aux = anterior[aux]
 
+            minimos.append(c)
+
             flow += c
             j = t
+            caminhoAtual = []
 
             while j != s:
                 i = anterior[j]
+                caminhoAtual.append(i)
                 g[i][j] -= c
                 g[j][i] += c
                 j = anterior[j]
 
-            residuais.append(g)
+            caminho.append(caminhoAtual.copy())
+
+            '''for i in range(len(caminhoAtual) - 1, -1, -1):
+                print(self.estados[caminhoAtual[i]], "->", end=' ')
+
+            print(self.estados[t])'''
+
+            aux = []
+
+            for i in range(0, len(g)):
+                aux.append(g[i].copy())
+
+            residuais.append(aux)
+            # print(g)
             fluxos.append(flow)
 
-        for i in range(0, len(residuais)-1):
+        for i in range(0, len(residuais)):
+            for j in range(len(caminho[i]) - 1, -1, -1):
+                print(self.estados[caminho[i][j]], "->", end=' ')
+
+            print(self.estados[t])
+
             print(residuais[i])
             print("Fluxo", i + 1, ":", fluxos[i])
-
-        print(residuais[len(residuais)-1])
-        print("Fluxo Final", ":", fluxos[len(residuais)-1])
-
+            print("Minimo:", minimos[i])
+            print()
 
     def BFS(self, g, s, t, anterior):
         color = []
