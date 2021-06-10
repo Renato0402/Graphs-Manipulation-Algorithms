@@ -12,4 +12,4 @@ if __name__ == '__main__':
     nx.draw_networkx(x)
     plt.show()'''
 
-    grafos.ford(grafos.grafo,0,grafos.estados,5)
+    grafos.ford(grafos.grafo, 0, 5)
